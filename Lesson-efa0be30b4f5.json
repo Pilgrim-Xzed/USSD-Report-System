@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "playchat-591df",
+  "private_key_id": "efa0be30b4f5fbf935774ea79ddd225da0bea6a4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC5PzCScSRwobDm\nPBmNOlE8iY3zyXk65QiDfAnJ9MPf5/T9k3GE+u/LLuVWElxqgJ8UsLF6to6vDqKk\nM8daBzBaEJaxBZk7+6VoOPq8fjbF8O/fp/5J9GEKvAugZQI5+nP+Khimct6KboYS\nwIvgalzLK2fNHcJHUjYVE2FuV7pXxBdifl2iHvVulqsKB2Th6+BZDLJ/Y7MzFUsJ\nFQjaeQcEaXS9vgV7YhBnLuM3K4C4isYFLZhWSPS4UaDphcdXR/RCyI3xHYhviIjJ\nr3VVO6SpfAo465YObM6HupDn8f+Nc60X7bEsw56s4I0Uox7ryuYa9ry7fXimm/yf\nRkDoYkF7AgMBAAECggEAFNyZZzyHqomDBwKoq/9vy54AFv7PAMNvSINtBMnkTzBr\npiz3IU8zNxIScLWDo9jVUXqumg+6FNvUlCJipnBd0R7CIbBsN9WYpJqaHiUmnPcL\nxIfCOujjDtbrhkYp0Ia0jmCGQyR3jGZzAeSePAkuZxD90RszWF3ZSllS5R7LFPwG\nLhcC0Nvp+8T7QD13jN+JVBHPwaCrZBFtN76C+/hSrl9ZaRtm/vqgvQCgL3rG5zRt\n67fKab7HVux+jUG3FMseuRl57m7XEeb1l90t4iTMuiS+x9EUE25mGoUM32ye8sKi\nQNFy2qNqqTwkDUJWIET01BR0SOroHNFzw6O+NLYncQKBgQD/GWiRTpSLjDB0b5JM\ncTWdIk54APWZtO4BqJzoSySRINQb1nBYl7/fzAeBoBCW4tQlnA2/1evxUoal5hJ4\nc9yRcurIRfivEYMHxQTi5q8LoKynFwDXgRoDq8PO0V8VN6yeZD95/lKxDmBFkkY1\nMrEwii06MVB9siXUAmc96u7wMQKBgQC55qPA/Q997TAVyF/FVpKz0XjzAhVWZKXz\nMYxpGzU4dAystNd/IAjwiVjoAx5eZdJ5oGgTIwi0vXeu1ZYWJErrWIWvnIOuNaDu\nnWEZNd2uSBQNAUhHY1HNexkQ+3v+CnQ+gDeDm+aXDhNSF4iw0Sb9lvxzdK5bptUB\nMF+C5W9tawKBgQDAAa/jLvI/1tThztifENb53siRKqexea1rMi5n6acsVTlReqY1\nCIMzP66msoPKDhD//eWbbriYezU9yV49q3dpQsXU2FXF77hgMLrszhUS+2z4lyfb\nDSE3giFvmcengLA8x9e/St2Sxu9PbjnJ8M3NazN/iX68HUq7uNNcl2ghAQKBgH1R\nOCR5sz7NbLPSbpUl5iEn3WPbjKy/joshZKjZ+YeD26N1CSweWUhlHjTRHWC/PSJW\nerIj1NOaQZrvSozEjGiYNQ6L8My4RDN2jiUjhbvdxP57VdEh59wf1mb3UL+RJomX\nf1TN/KTpjSayzKd9Zs5eQPJHvt3z2fVCObCQoAvfAoGAXXyhfG5sdJEJmBcRK1MR\nIrS++6zKx2gmL6a/dVUEff7FLsP6nLugW7r3ciTdys0IYnHn+W5vPgqoJF0fWElq\niaQOZf0ansb0So0ZtZiUj8nX76jlo8b/rkxrcAfus9bkLMNNdWMWlWsQS1sxCbu/\nN4RFojyYVvgxFgC+2B9+/3o=\n-----END PRIVATE KEY-----\n",
+  "client_email": "health-app@playchat-591df.iam.gserviceaccount.com",
+  "client_id": "110186834098444801473",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/health-app%40playchat-591df.iam.gserviceaccount.com"
+}
