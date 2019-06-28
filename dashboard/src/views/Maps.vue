@@ -78,7 +78,7 @@
               <MglMap
                 :accessToken="accessToken"
                 :mapStyle="mapStyle"
-                :zoom="13"
+                :zoom="12"
                 :center="coordinates"
               >
                 <MglNavigationControl position="top-right"/>
