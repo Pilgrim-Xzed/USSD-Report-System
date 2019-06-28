@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
+Vue.use(axios)
+
+global.axios = axios
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 

@@ -148,6 +148,7 @@
   import BarChart from '@/components/Charts/BarChart';
 
   // Tables
+  import axios from 'axios'
   import SocialTrafficTable from './Dashboard/SocialTrafficTable';
   import PageVisitsTable from './Dashboard/PageVisitsTable';
 
@@ -160,6 +161,7 @@
     },
     data() {
       return {
+        reports:{},
         bigLineChart: {
           allData: [
             [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -184,6 +186,12 @@
       };
     },
     methods: {
+      fetchStats(){
+        axios.get('http://localhost:3000').then((data)=>{
+          console.log(data)
+            this.reports =data.data.reports;
+        })
+      },
       initBigChart(index) {
         let chartData = {
           datasets: [
@@ -200,6 +208,7 @@
     },
     mounted() {
       this.initBigChart(0);
+      this.fetchStats()
     }
   };
 </script>

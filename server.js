@@ -8,8 +8,8 @@ const africaAT = require('africastalking')
 server.listen(port,()=>{
     
     console.log(`Server started on port ${port}`)
-    ussd = new africaAT({
-        apiKey: '3c52e16ffadfb9f3792885c426073f780fbf9a2d7b52c05f59b184d1966943cd',
+    const ussd = new africaAT({
+        apiKey: 'f67dc07a460194631aaba8ed2301bc728354e6c2024aadbef70a5037cbd02c7e',
         username: 'sandbox'
     })
 })
