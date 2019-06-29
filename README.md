@@ -1,16 +1,18 @@
 # CROWD SOURCED EPIDEMIC REPORT SYSTEM
 > ## USSD BASED *321\*XXX# SOLUTION 
 
+
+url : [VISIT PROJECT](http://)
 ![Markdown logo](./ussd.png)
 
-This app is built with the following functionalities integrated with it
+This app was developed using the following stack:
+> Nodejs , Express for API and Microservices
 
-1. Spatial Data
-    
-    >Display points on a map 
+>VueJS, For frontend
 
-2. Display the following Statistical data
+>Firebase client
 
-    >Graphs
+This project is aimed at building a data driven solution that provides datasets related to any epidemic outbreak in a given geographical region.
 
-    >Bars
+
+
