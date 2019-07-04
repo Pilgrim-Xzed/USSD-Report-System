@@ -4,10 +4,10 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Total Emergency SOS"
+                    <stats-card title="Total Reports"
                                 type="gradient-red"
-                                sub-title="350,897"
-                                icon="ni ni-active-40"
+                                :sub-title="ep.length.toString()"
+                                icon="fa fa-plus"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -18,10 +18,10 @@
                     </stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Accident"
+                    <stats-card title="LASA FEVER"
                                 type="gradient-orange"
                                 sub-title="2,356"
-                                icon="ni ni-chart-pie-35"
+                                icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -32,10 +32,10 @@
                     </stats-card>
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Robbery"
+                    <stats-card title="Ebola"
                                 type="gradient-green"
                                 sub-title="924"
-                                icon="ni ni-money-coins"
+                                icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -47,10 +47,10 @@
 
                 </div>
                 <div class="col-xl-3 col-lg-6">
-                    <stats-card title="Disease"
+                    <stats-card title="MALARIA"
                                 type="gradient-info"
                                 sub-title="49,65%"
-                                icon="ni ni-chart-bar-32"
+                                icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
 
@@ -65,77 +65,16 @@
 
         <!--Charts-->
         <div class="container-fluid mt--7">
-            <div class="row">
-                <div class="col-xl-8 mb-5 mb-xl-0">
-                    <card type="default" header-classes="bg-transparent">
-                        <div slot="header" class="row align-items-center">
-                            <div class="col">
-                                <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                                <h5 class="h3 text-white mb-0">Sales value</h5>
-                            </div>
-                            <div class="col">
-                                <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0">
-                                        <a class="nav-link py-2 px-3"
-                                           href="#"
-                                           :class="{active: bigLineChart.activeIndex === 0}"
-                                           @click.prevent="initBigChart(0)">
-                                            <span class="d-none d-md-block">Month</span>
-                                            <span class="d-md-none">M</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link py-2 px-3"
-                                           href="#"
-                                           :class="{active: bigLineChart.activeIndex === 1}"
-                                           @click.prevent="initBigChart(1)">
-                                            <span class="d-none d-md-block">Week</span>
-                                            <span class="d-md-none">W</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <line-chart
-                                :height="350"
-                                ref="bigChart"
-                                :chart-data="bigLineChart.chartData"
-                                :extra-options="bigLineChart.extraOptions"
-                        >
-                        </line-chart>
-
-                    </card>
+          <div class="row mt-5">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <page-visits-table></page-visits-table>
                 </div>
-
-                <div class="col-xl-4">
-                    <card header-classes="bg-transparent">
-                        <div slot="header" class="row align-items-center">
-                            <div class="col">
-                                <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                                <h5 class="h3 mb-0">Total orders</h5>
-                            </div>
-                        </div>
-
-                        <bar-chart
-                                :height="350"
-                                ref="barChart"
-                                :chart-data="redBarChart.chartData"
-                        >
-                        </bar-chart>
-                    </card>
-                </div>
+              
             </div>
             <!-- End charts-->
 
             <!--Tables-->
-            <div class="row mt-5">
-                <div class="col-xl-8 mb-5 mb-xl-0">
-                    <page-visits-table></page-visits-table>
-                </div>
-                <div class="col-xl-4">
-                    <social-traffic-table></social-traffic-table>
-                </div>
-            </div>
+       
             <!--End tables-->
         </div>
 
@@ -151,7 +90,7 @@
   import axios from 'axios'
   import SocialTrafficTable from './Dashboard/SocialTrafficTable';
   import PageVisitsTable from './Dashboard/PageVisitsTable';
-
+import {mapState} from 'vuex'
   export default {
     components: {
       LineChart,
@@ -205,6 +144,9 @@
         this.bigLineChart.chartData = chartData;
         this.bigLineChart.activeIndex = index;
       }
+    },
+    computed: {
+      ...mapState(['ep'])
     },
     mounted() {
       this.initBigChart(0);

@@ -96,13 +96,23 @@ app.post('/',(req,res)=>{
 `;
 
       } else if (text === "1*1*1") {
-        response = `CON Enter Outbreak info with '_' Before the location name e.g buk newsite`;
+        response = `CON Enter Outbreak Condition\n
+        1. Critical State
+        2. Moderate State 
+        `;
+        
+        
+      }else if (text === "1*1*1*1") {
+        desc = "Critical State"
+     
+        response = `CON Enter Location Name\n
+        `;
         
         
       } else if (text) {
-          erpArray = text.substring(6).split("_")
-          desc = erpArray[0]
-          epPlace=erpArray[1]
+       
+          epPlace=text.slice(8)
+          
           console.log(epPlace)
           geocoder.geocode({address: epPlace,  countryCode: 'Ng',state:epState, minConfidence: 0.5, limit: 5}, function(err, res) {
             sosRef.push()

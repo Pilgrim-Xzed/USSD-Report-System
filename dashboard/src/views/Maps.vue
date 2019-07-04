@@ -1,74 +1,67 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-red"
-            sub-title="350,897"
-            icon="ni ni-active-40"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Performance"
-            type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-      </div>
-    </base-header>
+        <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+            <!-- Card stats -->
+            <div class="row">
+                <div class="col-xl-3 col-lg-6">
+                    <stats-card title="Total Reports"
+                                type="gradient-red"
+                                :sub-title="ep.length.toString()"
+                                icon="fa fa-plus"
+                                class="mb-4 mb-xl-0"
+                    >
+
+                        <template slot="footer">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                            <span class="text-nowrap">Since last month</span>
+                        </template>
+                    </stats-card>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <stats-card title="LASA FEVER"
+                                type="gradient-orange"
+                                sub-title="2,356"
+                                icon="fa fa-ambulance"
+                                class="mb-4 mb-xl-0"
+                    >
+
+                        <template slot="footer">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 12.18%</span>
+                            <span class="text-nowrap">Since last month</span>
+                        </template>
+                    </stats-card>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <stats-card title="Ebola"
+                                type="gradient-green"
+                                sub-title="924"
+                                icon="fa fa-ambulance"
+                                class="mb-4 mb-xl-0"
+                    >
+
+                        <template slot="footer">
+                            <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i> 5.72%</span>
+                            <span class="text-nowrap">Since last month</span>
+                        </template>
+                    </stats-card>
+
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <stats-card title="MALARIA"
+                                type="gradient-info"
+                                sub-title="49,65%"
+                                icon="fa fa-ambulance"
+                                class="mb-4 mb-xl-0"
+                    >
+
+                        <template slot="footer">
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 54.8%</span>
+                            <span class="text-nowrap">Since last month</span>
+                        </template>
+                    </stats-card>
+                </div>
+            </div>
+        </base-header>
 
     <div class="container-fluid mt--7">
       <div class="row">
@@ -83,7 +76,7 @@
               >
                 <MglNavigationControl position="top-right"/>
 
-                <MglMarker v-for="point in getFeatureSet" :key="point" :coordinates="point.location">
+                <MglMarker v-for="point in fetchEp" :key="point" :coordinates="point.location">
                   <MglPopup>
                     <VCard>
                       <div>{{`${point.desc} , ${point.lga}` }}!</div>
@@ -103,61 +96,27 @@ import Mapbox from "mapbox-gl";
 import axios from "axios";
 import firebase from "../firebase";
 import { MglMap, MglPopup, MglMarker } from "vue-mapbox";
+import {mapState,mapGetters,mapMutations} from 'vuex'
 import { setInterval } from "timers";
 export default {
   components: {
     MglMap,
+    MglPopup,
     MglMarker,
-    MglPopup
+ 
   },
-  data() {
-    return {
-      ep: [],
-     
-      ref: firebase.database().ref("node"),
-      url: "http://localhost:3000",
-      accessToken:
-        "pk.eyJ1Ijoic2FpZHUiLCJhIjoiY2pveTNrM3ZvMTdpajNyb2R0Nmg1cG5hMCJ9.dDu8jfgjcQheDRsucflg3g",
-      mapStyle: "mapbox://styles/mapbox/dark-v10",
-      coordinates: [8.5233569, 11.9840647]
-    };
-  },
+  
   methods: {
-    fetchEp() {
-      this.ref.child('sos-reports').once("value",snaps => {
-          snaps.forEach(snap => {
-              this.ep.push({
-                  id:snap.ref.key,
-                  desc:snap.child('desc').val(),
-                  lga:snap.child('lga').val(),
-                  location:snap.child('location').val()
-                  
-              })
-              
-          })
-      })
-  },
+    ...mapMutations(['getFeatureSet'])
   },
   computed:{
-      getFeatureSet(){
-          let dataset = []
-          this.ep.forEach(doc=>{
-              dataset.push({
-                  desc:doc.desc,
-                  location:[doc.location[0].longitude,doc.location[0].latitude],
-                  lga:doc.lga
-
-
-              })
-          })
-
-          return dataset
-      }
+      ...mapGetters(['fetchEp']),
+      ...mapState(['ep','ref','url','accessToken','mapStyle','coordinates'])
   },
   created() {
-    this.mapbox = Mapbox;
-
-    this.fetchEp();
+    this.mapbox = Mapbox; 
+    this.getFeatureSet();
+ 
   }
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">Page visits</h3>
+          <h3 class="mb-0">REPORTS</h3>
         </div>
         <div class="col text-right">
           <a href="#!" class="btn btn-sm btn-primary">See all</a>
@@ -15,10 +15,10 @@
       <base-table thead-classes="thead-light"
                   :data="tableData">
         <template slot="columns">
-          <th>Page name</th>
-          <th>Visitors</th>
-          <th>Unique users</th>
-          <th>Bounce rate</th>
+          <th>STATE</th>
+          <th>EPIDEMIC</th>
+          <th>LOCATIOM</th>
+          <th>MARKED</th>
         </template>
 
         <template slot-scope="{row}">
@@ -45,6 +45,7 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
   export default {
     name: 'page-visits-table',
     data() {
@@ -87,6 +88,9 @@
           }
         ]
       }
+    },
+    computed:{
+      ...mapState(['ep'])
     }
   }
 </script>
