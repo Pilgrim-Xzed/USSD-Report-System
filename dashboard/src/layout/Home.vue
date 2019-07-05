@@ -12,7 +12,7 @@
 						<img src="img/health.png" width="100" height="60" alt="">
 						
 						<ul class="clearfix">
-								<li>Health System</li>
+								<li>USSD *384*88812#</li>
                         <li></li>
 							
 						</ul>
