@@ -1,6 +1,6 @@
 <template>
     <div>
-        <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+         <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-3 col-lg-6">
@@ -20,7 +20,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="LASA FEVER"
                                 type="gradient-orange"
-                                sub-title="2,356"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -34,7 +34,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="Ebola"
                                 type="gradient-green"
-                                sub-title="924"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -49,7 +49,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="MALARIA"
                                 type="gradient-info"
-                                sub-title="49,65%"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -65,16 +65,36 @@
 
         <!--Charts-->
         <div class="container-fluid mt--7">
-          <div class="row mt-5">
+            <div class="row">
+             
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <card header-classes="bg-transparent">
+                        <div slot="header" class="row align-items-center">
+                            <div class="col">
+                                <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                                <h5 class="h3 mb-0">Total orders</h5>
+                            </div>
+                        </div>
+
+                        <bar-chart
+                                :height="350"
+                                ref="barChart"
+                                :chart-data="redBarChart.chartData"
+                        >
+                        </bar-chart>
+                    </card>
+                </div>
+                
+            </div>
+            <!-- End charts-->
+
+            <!--Tables-->
+            <div class="row mt-5">
                 <div class="col-xl-12 mb-5 mb-xl-0">
                     <page-visits-table></page-visits-table>
                 </div>
               
             </div>
-            <!-- End charts-->
-
-            <!--Tables-->
-       
             <!--End tables-->
         </div>
 
@@ -87,10 +107,9 @@
   import BarChart from '@/components/Charts/BarChart';
 
   // Tables
-  import axios from 'axios'
   import SocialTrafficTable from './Dashboard/SocialTrafficTable';
   import PageVisitsTable from './Dashboard/PageVisitsTable';
-import {mapState} from 'vuex'
+  import {mapMutations,mapState,mapGetters} from 'vuex'
   export default {
     components: {
       LineChart,
@@ -100,7 +119,6 @@ import {mapState} from 'vuex'
     },
     data() {
       return {
-        reports:{},
         bigLineChart: {
           allData: [
             [0, 20, 10, 30, 15, 40, 20, 60, 60],
@@ -115,22 +133,17 @@ import {mapState} from 'vuex'
         },
         redBarChart: {
           chartData: {
-            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['Malaria', 'Lasa Fever', 'Ebola', 'Measels'],
             datasets: [{
               label: 'Sales',
-              data: [25, 20, 30, 22, 17, 29]
+              data: [25, 20, 30, 22]
             }]
           }
         }
       };
     },
     methods: {
-      fetchStats(){
-        axios.get('http://localhost:3000').then((data)=>{
-          console.log(data)
-            this.reports =data.data.reports;
-        })
-      },
+      ...mapMutations(['getFeatureSet']),
       initBigChart(index) {
         let chartData = {
           datasets: [
@@ -145,12 +158,14 @@ import {mapState} from 'vuex'
         this.bigLineChart.activeIndex = index;
       }
     },
-    computed: {
+    computed:{
+      
       ...mapState(['ep'])
+    
     },
     mounted() {
       this.initBigChart(0);
-      this.fetchStats()
+          this.getFeatureSet();
     }
   };
 </script>

@@ -16,16 +16,21 @@ export default new Vuex.Store({
     getters: {
         fetchEp:state=> {
             let dataset = []
+            
             state.ep.forEach(doc => {
                 dataset.push({
                     desc: doc.desc,
+                    epidemic:doc.epidemic,
                     location: [doc.location[0].longitude, doc.location[0].latitude],
                     lga: doc.lga
 
 
                 })
             })
-            return dataset
+            
+
+            
+            return Array.from(new Set(dataset))
            
         }
     },
@@ -33,7 +38,9 @@ export default new Vuex.Store({
 
     },
     mutations: {
+        
         getFeatureSet:state=> {
+            state.ep =[]
             state.ref.child('sos-reports').once("value", snaps => {
                 
                 snaps.forEach(snap => {
@@ -41,6 +48,7 @@ export default new Vuex.Store({
                     state.ep.push({
                         id: snap.ref.key,
                         desc: snap.child('desc').val(),
+                        epidemic:snap.child('epidemic').val(),
                         lga: snap.child('lga').val(),
                         location: snap.child('location').val()
 

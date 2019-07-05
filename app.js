@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const firebase = require('firebase')
 const cors = require('cors')
 const NodeGeocoder = require('node-geocoder')
-
+const ussdMenu = require('ussd-menu-builder')
+let menu = new ussdMenu()
 let options = {
   provider: 'google',
  
@@ -13,7 +14,7 @@ let options = {
   httpAdapter: 'https', // Default
  
 
-  apiKey: 'AIzaSyC4v-4-gkbNE2NN3OK_DNnvnyLK5EnLys8', // for Mapquest, OpenCage, Google Premier
+  apiKey: 'AIzaSyC2MsiYaaXea2X1qGDu_tVBBMTPoUXun7k', // for Mapquest, OpenCage, Google Premier
   formatter: null         // 'gpx', 'string', ...
 }
 
@@ -45,7 +46,7 @@ const sosRef = ref.child('sos-reports')
 
 let epState ;
 let epLga;
-let erpArray;
+let disease;
 let desc;
 let epPlace;
 app.get('/',(req,res)=>{
@@ -62,77 +63,120 @@ app.get('/',(req,res)=>{
    
 })
 app.post('/',(req,res)=>{
-   // Read variables sent via POST from our SDK
-   const { sessionId, serviceCode, phoneNumber, text } = req.body;
+  let args = {
+    phoneNumber: req.body.phoneNumber,
+    sessionId: req.body.sessionId,
+    serviceCode: req.body.serviceCode,
+    text: req.body.text
+};
+
+menu.run(args, resMsg => {
+  res.send(resMsg);
+});
+
+
+menu.startState({
+  run: () => {
+      // use menu.con() to send response without terminating session      
+      menu.con(`REPORT EPIDEMIC/DISEASE OUTBREAK:\n1.Kano \n2.Kaduna \n3.Lagos`);
+  },
+  // next object links to next state based on user input
+  next: {
+      '1': 'Kano',
+      '2': 'Kaduna',
+      '3': 'Lagos'
+  }
+});
+
+menu.state('Kano', {
   
-   console.log('####################', req.body);
-   let response = "";
+  run: () => {
+    epState = "Kano",
+    menu.con(`SELECT LGA :\n1.Gwarzo \n2.Bebeji \n3.Karaye`);
+  },
+  next:{
+    '1':'Gwarzo',
+    '2':'Bebeji',
+    '3':'Karaye'
+  }
+});
 
-    if (text === "") {
-        console.log(text);
-        // This is the first request. Note how we start the response with CON
-        response = `CON REPORT EPIDEMIC/DISEASE OUTBREAK  
-        ***********************************\n
-        1. KANO
-        2. KADUNA 
-        3. LAGOS
-        4. ABUJA
-        `;
-      } else if (text === "1") {
-        epState ="Kano"
-        response = `CON ENTER LGA OF OUTBREAK \n 
-        1. Gwarzo
-        2. Albasu
-        3. Bebeji
-        4. Dawakin Kudu
-`;
-      } else if (text === "1*1") {
-        epLga = "Gwarzo"
-        response = `CON SELECT EPIDEMIC CATEGORY \n 
-        1. Lasa Fever
-        2. Ebola
-        3. Measles
-        4. Chemical disease
-`;
+menu.state('Gwarzo',{
+  
+  run:()=>{
+    epLga="Gwarzo",
+    menu.con(`DISEASE EPIDEMIC :\n1.Malaria \n2.Lasa Fever \n3.Ebola`);
+  },
+  next:{
+    '1':'Malaria',
+    '2':'LasaFever',
+    '3':'Ebola'
+  }
+})
 
-      } else if (text === "1*1*1") {
-        response = `CON Enter Outbreak Condition\n
-        1. Critical State
-        2. Moderate State 
-        `;
-        
-        
-      }else if (text === "1*1*1*1") {
-        desc = "Critical State"
-     
-        response = `CON Enter Location Name\n
-        `;
-        
-        
-      } else if (text) {
-       
-          epPlace=text.slice(8)
-          
-          console.log(epPlace)
-          geocoder.geocode({address: epPlace,  countryCode: 'Ng',state:epState, minConfidence: 0.5, limit: 5}, function(err, res) {
-            sosRef.push()
-            sosRef.push({
-                state:epState,
-                lga:epLga,
-                desc:desc,
-                location:res
+menu.state('Malaria',{
+  run:()=>{
+    disease = "Malaria"
+    menu.con(`Enter Particular Location to be precised `);
+  },
+  next: {
+    '*[a-zA-Z]+': 'Malaria.locationName'
+}
+})
 
-            })
-          }).catch(err=>{
-            console.log(err)
-          })
-      response = `END Your SOS has beed submited`;
-      }
+
+
+
+menu.state('Malaria.locationName',{
+  run:()=>{
+    epPlace = menu.val;
+   console.log(epPlace)
     
-      // Print the response onto the page so that our SDK can read it
-      res.set("Content-Type: text/plain");
-      res.send(response);
-      // DONE!!!
+   
+    
+    menu.con(`Enter Other Info `);
+  },
+  next: {
+    '*[a-zA-Z]+': 'Final.desc'
+}
+})
+
+
+menu.state('Final.desc',{
+  run:()=>{
+    desc = menu.val;
+    geocoder.geocode({address: epPlace,  countryCode: 'Ng',state:epState, minConfidence: 0.5, limit: 5}, function(err, res) {
+      sosRef.push()
+      sosRef.push({
+          state:epState,
+          lga:epLga,
+          desc:desc,
+          epidemic:disease,
+          location:res
+
+      })
+    }).catch(err=>{
+      geocoder.geocode({address: epLga,  countryCode: 'Ng',state:epState, minConfidence: 0.5, limit: 5}, function(err, res) {
+        sosRef.push()
+        sosRef.push({
+            state:epState,
+            lga:epLga,
+            desc:desc,
+            epidemic:disease,
+            location:res
+  
+        })
+      })
+    })
+    
+   
+    
+    menu.end(`Thank You, SOS has been sent `);
+  },
+  
+})
+
+
 })
 
 

@@ -20,7 +20,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="LASA FEVER"
                                 type="gradient-orange"
-                                sub-title="2,356"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -34,7 +34,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="Ebola"
                                 type="gradient-green"
-                                sub-title="924"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -49,7 +49,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="MALARIA"
                                 type="gradient-info"
-                                sub-title="49,65%"
+                                sub-title="0"
                                 icon="fa fa-ambulance"
                                 class="mb-4 mb-xl-0"
                     >
@@ -62,6 +62,7 @@
                 </div>
             </div>
         </base-header>
+
 
     <div class="container-fluid mt--7">
       <div class="row">
@@ -108,7 +109,7 @@ export default {
   
   methods: {
     ...mapMutations(['getFeatureSet'])
-  },
+  },  
   computed:{
       ...mapGetters(['fetchEp']),
       ...mapState(['ep','ref','url','accessToken','mapStyle','coordinates'])

@@ -15,27 +15,32 @@
       <base-table thead-classes="thead-light"
                   :data="tableData">
         <template slot="columns">
-          <th>STATE</th>
+          <th>LGA</th>
+          <th>PLACE</th>
           <th>EPIDEMIC</th>
+
           <th>LOCATIOM</th>
-          <th>MARKED</th>
+          <th>CONDITION</th>
         </template>
 
         <template slot-scope="{row}">
           <th scope="row">
-            {{row.page}}
+            {{row.lga}}
+          </th>
+          <th scope="row">
+            {{row.location[0].formattedAddress}}
           </th>
           <td>
-            {{row.visitors}}
+            {{row.epidemic}}
           </td>
           <td>
-            {{row.unique}}
+            {{row.desc}}
           </td>
           <td>
-            <i class="fas fa-arrow-up text-success mr-3"
+            <i class="fa fa-ambulance text-success mr-3"
                :class="row.bounceRateDirection === 'up' ? 'text-success': 'text-danger'">
             </i>
-            {{row.bounceRate}}
+           critical
           </td>
         </template>
 
@@ -45,53 +50,20 @@
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapGetters,mapMutations} from 'vuex'
   export default {
     name: 'page-visits-table',
     data() {
       return {
-        tableData: [
-          {
-            page: '/argon/',
-            visitors: '4,569',
-            unique: '340',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/index.html',
-            visitors: '3,985',
-            unique: '319',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/charts.html',
-            visitors: '3,513',
-            unique: '294',
-            bounceRate: '36,49%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/tables.html',
-            visitors: '2,050',
-            unique: '147',
-            bounceRate: '50,87%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/profile.html',
-            visitors: '1,795',
-            unique: '190',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
-          }
-        ]
+       tableData:this.$store.state.ep
       }
     },
+
     computed:{
+      ...mapGetters(['fetchEp']),
       ...mapState(['ep'])
-    }
+    },
+  
   }
 </script>
 <style>
